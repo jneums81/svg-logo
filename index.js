@@ -3,8 +3,8 @@ const fs = require('fs');
 const { Triangle, Circle, Square } = require('./lib/shapes');
 
 function validateText(input) {
-    return input.length <= 3 ? true : 'Text must be up to three characters.';
-  }
+  return input.length <= 3 ? true : 'Text must be up to three characters.';
+}
 
 // Function to validate color input (either keyword or hex code)
 function validateColor(input) {
@@ -65,9 +65,13 @@ async function start() {
     }
     shape.setColor(userInput.shapeColor);
 
-    // Generate the SVG logo with the specified dimensions and shape
-const svg = `<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">${shape.render()}</svg>`;
-
+    // Generate the SVG logo with the specified dimensions, shape, and text
+    const svg = `<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+      ${shape.render()} <!-- Render the shape -->
+      <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="24" fill="${userInput.textColor}">
+        ${userInput.text}
+      </text>
+    </svg>`;
 
     // Write the SVG to a file
     fs.writeFileSync('logo.svg', svg);
